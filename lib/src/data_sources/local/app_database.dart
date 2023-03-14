@@ -1,16 +1,22 @@
-// To open the database, add these imports to the existing file defining the
-// database class. They are used to open the database.
 import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:sample_drift_app/src/data_sources/database.dart';
+import 'package:sample_drift_app/src/data_sources/local/daos/todo_dao.dart';
+import 'package:sample_drift_app/src/data_sources/local/database.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Todo])
+@DriftDatabase(
+  tables: [
+    Todo,
+  ],
+  daos: [
+    TodoDao,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

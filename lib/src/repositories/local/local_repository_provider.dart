@@ -1,7 +1,13 @@
-import 'package:sample_drift_app/src/data_sources/app_database.dart';
+import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
+
+import 'local_todo_repository.dart';
 
 class LocalRepositoryProvider {
   final AppDatabase appDatabase;
 
-  LocalRepositoryProvider(this.appDatabase) {}
+  late final LocalTodoRepository todoRepo;
+
+  LocalRepositoryProvider(this.appDatabase) {
+    todoRepo = LocalTodoRepository(appDatabase);
+  }
 }

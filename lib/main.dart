@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sample_drift_app/src/data_sources/database.dart';
+import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
 import 'package:sample_drift_app/src/repositories/local/local_repository_provider.dart';
 import 'package:sample_drift_app/src/routes/app_router.dart';
 
