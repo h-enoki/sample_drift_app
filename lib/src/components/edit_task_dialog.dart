@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sample_drift_app/main.dart';
+import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
 import 'package:sample_drift_app/src/models/task.dart';
 
 import 'package:sample_drift_app/src/views/todo_list_page/todo_list_page.dart';
@@ -88,6 +90,19 @@ class EditTaskDialog extends ConsumerWidget {
                   ref
                       .read(taskNotifierProvider.notifier)
                       .addTask(Task(textValue, false));
+
+                  final localRepo = ref.read(localRepoProvider);
+                  final todoRepo = localRepo.todoRepo;
+
+                  // インサート
+                  TodoData newTodo = const TodoData(
+                    id: 1,
+                    title: 'New Todo Title',
+                    isCompleted: false,
+                  );
+
+                  todoRepo.insertTodo(newTodo);
+
                   break;
                 case AddEditMode.addFirst:
                   ref

@@ -25,12 +25,6 @@ class $TodoTable extends Todo with TableInfo<$TodoTable, TodoData> {
           GeneratedColumn.checkTextLength(minTextLength: 0, maxTextLength: 20),
       type: DriftSqlType.string,
       requiredDuringInsert: true);
-  static const VerificationMeta _contentMeta =
-      const VerificationMeta('content');
-  @override
-  late final GeneratedColumn<String> content = GeneratedColumn<String>(
-      'body', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _isCompletedMeta =
       const VerificationMeta('isCompleted');
   @override
@@ -45,7 +39,7 @@ class $TodoTable extends Todo with TableInfo<$TodoTable, TodoData> {
           }),
           defaultValue: const Constant(true));
   @override
-  List<GeneratedColumn> get $columns => [id, title, content, isCompleted];
+  List<GeneratedColumn> get $columns => [id, title, isCompleted];
   @override
   String get aliasedName => _alias ?? 'todo';
   @override
@@ -63,12 +57,6 @@ class $TodoTable extends Todo with TableInfo<$TodoTable, TodoData> {
           _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
-    }
-    if (data.containsKey('body')) {
-      context.handle(_contentMeta,
-          content.isAcceptableOrUnknown(data['body']!, _contentMeta));
-    } else if (isInserting) {
-      context.missing(_contentMeta);
     }
     if (data.containsKey('is_completed')) {
       context.handle(
@@ -89,8 +77,6 @@ class $TodoTable extends Todo with TableInfo<$TodoTable, TodoData> {
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      content: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
       isCompleted: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_completed'])!,
     );
@@ -105,19 +91,14 @@ class $TodoTable extends Todo with TableInfo<$TodoTable, TodoData> {
 class TodoData extends DataClass implements Insertable<TodoData> {
   final int id;
   final String title;
-  final String content;
   final bool isCompleted;
   const TodoData(
-      {required this.id,
-      required this.title,
-      required this.content,
-      required this.isCompleted});
+      {required this.id, required this.title, required this.isCompleted});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
-    map['body'] = Variable<String>(content);
     map['is_completed'] = Variable<bool>(isCompleted);
     return map;
   }
@@ -126,7 +107,6 @@ class TodoData extends DataClass implements Insertable<TodoData> {
     return TodoCompanion(
       id: Value(id),
       title: Value(title),
-      content: Value(content),
       isCompleted: Value(isCompleted),
     );
   }
@@ -137,7 +117,6 @@ class TodoData extends DataClass implements Insertable<TodoData> {
     return TodoData(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
-      content: serializer.fromJson<String>(json['content']),
       isCompleted: serializer.fromJson<bool>(json['isCompleted']),
     );
   }
@@ -147,17 +126,13 @@ class TodoData extends DataClass implements Insertable<TodoData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
-      'content': serializer.toJson<String>(content),
       'isCompleted': serializer.toJson<bool>(isCompleted),
     };
   }
 
-  TodoData copyWith(
-          {int? id, String? title, String? content, bool? isCompleted}) =>
-      TodoData(
+  TodoData copyWith({int? id, String? title, bool? isCompleted}) => TodoData(
         id: id ?? this.id,
         title: title ?? this.title,
-        content: content ?? this.content,
         isCompleted: isCompleted ?? this.isCompleted,
       );
   @override
@@ -165,65 +140,53 @@ class TodoData extends DataClass implements Insertable<TodoData> {
     return (StringBuffer('TodoData(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('content: $content, ')
           ..write('isCompleted: $isCompleted')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, content, isCompleted);
+  int get hashCode => Object.hash(id, title, isCompleted);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TodoData &&
           other.id == this.id &&
           other.title == this.title &&
-          other.content == this.content &&
           other.isCompleted == this.isCompleted);
 }
 
 class TodoCompanion extends UpdateCompanion<TodoData> {
   final Value<int> id;
   final Value<String> title;
-  final Value<String> content;
   final Value<bool> isCompleted;
   const TodoCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
-    this.content = const Value.absent(),
     this.isCompleted = const Value.absent(),
   });
   TodoCompanion.insert({
     this.id = const Value.absent(),
     required String title,
-    required String content,
     this.isCompleted = const Value.absent(),
-  })  : title = Value(title),
-        content = Value(content);
+  }) : title = Value(title);
   static Insertable<TodoData> custom({
     Expression<int>? id,
     Expression<String>? title,
-    Expression<String>? content,
     Expression<bool>? isCompleted,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
-      if (content != null) 'body': content,
       if (isCompleted != null) 'is_completed': isCompleted,
     });
   }
 
   TodoCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? title,
-      Value<String>? content,
-      Value<bool>? isCompleted}) {
+      {Value<int>? id, Value<String>? title, Value<bool>? isCompleted}) {
     return TodoCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
-      content: content ?? this.content,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
@@ -237,9 +200,6 @@ class TodoCompanion extends UpdateCompanion<TodoData> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
-    if (content.present) {
-      map['body'] = Variable<String>(content.value);
-    }
     if (isCompleted.present) {
       map['is_completed'] = Variable<bool>(isCompleted.value);
     }
@@ -251,7 +211,6 @@ class TodoCompanion extends UpdateCompanion<TodoData> {
     return (StringBuffer('TodoCompanion(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('content: $content, ')
           ..write('isCompleted: $isCompleted')
           ..write(')'))
         .toString();

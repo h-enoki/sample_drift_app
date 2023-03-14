@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sample_drift_app/main.dart';
 import 'package:sample_drift_app/src/components/edit_task_dialog.dart';
+import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
 import 'package:sample_drift_app/src/models/task.dart';
 import 'package:sample_drift_app/src/views/todo_list_page/parts/todo_list_item.dart';
 
@@ -65,6 +67,12 @@ class TaskNotifier extends StateNotifier<List<Task>> {
   }
 }
 
+final todoListProvider = StreamProvider<List<TodoData>>((ref) {
+  final localRepo = ref.watch(localRepoProvider);
+  final todoRepo = localRepo.todoRepo;
+  return todoRepo.watchAllTodos();
+});
+
 class ToDoListPage extends ConsumerWidget {
   const ToDoListPage({super.key});
 
@@ -72,6 +80,11 @@ class ToDoListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditing = ref.watch(isEditingProvider);
     final task = ref.watch(taskNotifierProvider);
+
+    final todoList = ref.watch(todoListProvider);
+
+    debugPrint("@@@@@@@");
+    debugPrint(todoList.value.toString());
 
     return Scaffold(
       appBar: AppBar(
