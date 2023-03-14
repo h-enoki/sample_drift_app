@@ -3,27 +3,27 @@ import 'package:sample_drift_app/src/data_sources/local/database.dart';
 
 part 'todo_dao.g.dart';
 
-@DriftAccessor(tables: [Todo])
-class TodoDao extends DatabaseAccessor<AppDatabase> with _$TodoDaoMixin {
-  TodoDao(AppDatabase db) : super(db);
+@DriftAccessor(tables: [Todos])
+class TodosDao extends DatabaseAccessor<AppDatabase> with _$TodosDaoMixin {
+  TodosDao(AppDatabase db) : super(db);
 
-  Future<List<TodoData>> getAllTodos() {
-    return select(todo).get();
+  Future<List<Todo>> getAllTodos() {
+    return select(todos).get();
   }
 
-  Stream<List<TodoData>> watchAllTodos() {
-    return select(todo).watch();
+  Stream<List<Todo>> watchAllTodos() {
+    return select(todos).watch();
   }
 
-  Future insertTodo(Insertable<TodoData> data) {
-    return into(todo).insert(data);
+  Future insertTodo(Insertable<Todo> data) {
+    return into(todos).insert(data);
   }
 
-  Future updateTodo(Insertable<TodoData> data) {
-    return update(todo).replace(data);
+  Future updateTodo(Insertable<Todo> data) {
+    return update(todos).replace(data);
   }
 
   Future deleteTodoById(int id) {
-    return (delete(todo)..where((t) => t.id.equals(id))).go();
+    return (delete(todos)..where((t) => t.id.equals(id))).go();
   }
 }

@@ -9,7 +9,7 @@ class TodoListItem extends ConsumerWidget {
   const TodoListItem({super.key, required this.index, required this.todoData});
 
   final int index;
-  final TodoData todoData;
+  final Todo todoData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

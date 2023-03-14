@@ -11,10 +11,10 @@ part 'app_database.g.dart';
 
 @DriftDatabase(
   tables: [
-    Todo,
+    Todos,
   ],
   daos: [
-    TodoDao,
+    TodosDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {

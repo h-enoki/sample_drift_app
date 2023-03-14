@@ -67,7 +67,7 @@ class TaskNotifier extends StateNotifier<List<Task>> {
   }
 }
 
-final todoListProvider = StreamProvider<List<TodoData>>((ref) {
+final todoListProvider = StreamProvider<List<Todo>>((ref) {
   final localRepo = ref.watch(localRepoProvider);
   final todoRepo = localRepo.todoRepo;
   return todoRepo.watchAllTodos();

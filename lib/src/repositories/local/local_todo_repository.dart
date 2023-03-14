@@ -2,23 +2,24 @@ import 'package:sample_drift_app/src/data_sources/local/daos/todo_dao.dart';
 import 'package:sample_drift_app/src/data_sources/local/database.dart';
 
 class LocalTodoRepository {
-  final TodoDao todoDao;
+  final TodosDao todosDao;
 
-  LocalTodoRepository(AppDatabase appDatabase) : todoDao = appDatabase.todoDao;
+  LocalTodoRepository(AppDatabase appDatabase)
+      : todosDao = appDatabase.todosDao;
 
-  Stream<List<TodoData>> watchAllTodos() {
-    return todoDao.watchAllTodos();
+  Stream<List<Todo>> watchAllTodos() {
+    return todosDao.watchAllTodos();
   }
 
-  Future<void> insertTodo(TodoData todo) {
-    return todoDao.insertTodo(todo);
+  Future<void> insertTodo(Todo todo) {
+    return todosDao.insertTodo(todo);
   }
 
-  Future<void> updateTodo(TodoData todo) {
-    return todoDao.updateTodo(todo);
+  Future<void> updateTodo(Todo todo) {
+    return todosDao.updateTodo(todo);
   }
 
   Future<void> deleteTodoById(int id) {
-    return todoDao.deleteTodoById(id);
+    return todosDao.deleteTodoById(id);
   }
 }

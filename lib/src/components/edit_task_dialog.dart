@@ -95,7 +95,7 @@ class EditTaskDialog extends ConsumerWidget {
                   final todoRepo = localRepo.todoRepo;
 
                   // インサート
-                  TodoData newTodo = const TodoData(
+                  Todo newTodo = const Todo(
                     id: 1,
                     title: 'New Todo Title',
                     isCompleted: false,
