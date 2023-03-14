@@ -83,8 +83,8 @@ class ToDoListPage extends ConsumerWidget {
 
     final todoList = ref.watch(todoListProvider);
 
-    debugPrint("@@@@@@@");
     debugPrint(todoList.value.toString());
+    debugPrint(todoList.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -97,26 +97,35 @@ class ToDoListPage extends ConsumerWidget {
           ),
         ],
       ),
-      body: ReorderableListView.builder(
-        itemCount: task.length,
-        header: isEditing
-            ? const AddTaskListTile(addEditMode: AddEditMode.addFirst)
-            : null,
-        footer: isEditing
-            ? const AddTaskListTile(addEditMode: AddEditMode.add)
-            : null,
-        itemBuilder: (context, index) {
-          return TodoListItem(
-            key: Key(index.toString()),
-            index: index,
-            task: task[index],
+      body: todoList.when(
+        // エラー時
+        error: (err, _) => Text(err.toString()),
+        // 読み込み時
+        loading: () => const Center(child: CircularProgressIndicator()),
+        // データ受け取り時
+        data: (data) {
+          return ReorderableListView.builder(
+            itemCount: data.length,
+            header: isEditing
+                ? const AddTaskListTile(addEditMode: AddEditMode.addFirst)
+                : null,
+            footer: isEditing
+                ? const AddTaskListTile(addEditMode: AddEditMode.add)
+                : null,
+            itemBuilder: (context, index) {
+              return TodoListItem(
+                key: Key(index.toString()),
+                index: index,
+                todoData: data[index],
+              );
+            },
+            // ドラッグ&ドロップ時のメソッド
+            onReorder: (oldIndex, newIndex) {
+              ref
+                  .read(taskNotifierProvider.notifier)
+                  .reorderTask(oldIndex, newIndex);
+            },
           );
-        },
-        // ドラッグ&ドロップ時のメソッド
-        onReorder: (oldIndex, newIndex) {
-          ref
-              .read(taskNotifierProvider.notifier)
-              .reorderTask(oldIndex, newIndex);
         },
       ),
     );
