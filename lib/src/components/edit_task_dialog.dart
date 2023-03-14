@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,10 +96,9 @@ class EditTaskDialog extends ConsumerWidget {
                   final todoRepo = localRepo.todoRepo;
 
                   // インサート
-                  Todo newTodo = const Todo(
-                    id: 1,
-                    title: 'New Todo Title',
-                    isCompleted: false,
+                  TodosCompanion newTodo = const TodosCompanion(
+                    title: Value('New Todo Title2'),
+                    isCompleted: Value(false),
                   );
 
                   todoRepo.insertTodo(newTodo);

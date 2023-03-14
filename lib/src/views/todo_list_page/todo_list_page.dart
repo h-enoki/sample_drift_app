@@ -116,7 +116,7 @@ class ToDoListPage extends ConsumerWidget {
               return TodoListItem(
                 key: Key(index.toString()),
                 index: index,
-                todoData: data[index],
+                todo: data[index],
               );
             },
             // ドラッグ&ドロップ時のメソッド

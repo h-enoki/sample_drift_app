@@ -15,12 +15,12 @@ class TodosDao extends DatabaseAccessor<AppDatabase> with _$TodosDaoMixin {
     return select(todos).watch();
   }
 
-  Future insertTodo(Insertable<Todo> data) {
-    return into(todos).insert(data);
+  Future<int> insertTodo(TodosCompanion todo) {
+    return into(todos).insert(todo);
   }
 
-  Future updateTodo(Insertable<Todo> data) {
-    return update(todos).replace(data);
+  Future updateTodo(Todo todo) {
+    return update(todos).replace(todo);
   }
 
   Future deleteTodoById(int id) {

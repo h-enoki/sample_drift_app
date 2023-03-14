@@ -11,7 +11,7 @@ class LocalTodoRepository {
     return todosDao.watchAllTodos();
   }
 
-  Future<void> insertTodo(Todo todo) {
+  Future<void> insertTodo(TodosCompanion todo) {
     return todosDao.insertTodo(todo);
   }
 
