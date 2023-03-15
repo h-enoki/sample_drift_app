@@ -14,14 +14,12 @@ class EditTaskDialog extends ConsumerWidget {
   const EditTaskDialog({
     super.key,
     required this.addEditMode,
-    this.index,
-    this.title,
+    this.todo,
     required this.textEditingController,
   });
 
   final AddEditMode addEditMode;
-  final int? index;
-  final String? title;
+  final Todo? todo;
   final TextEditingController textEditingController;
 
   factory EditTaskDialog.addTask() {
@@ -31,17 +29,19 @@ class EditTaskDialog extends ConsumerWidget {
     );
   }
 
-  factory EditTaskDialog.editTask(int index, String title) {
+  factory EditTaskDialog.editTask(int index, Todo todo) {
     return EditTaskDialog(
       addEditMode: AddEditMode.edit,
-      index: index,
-      title: title,
-      textEditingController: TextEditingController(text: title),
+      todo: todo,
+      textEditingController: TextEditingController(text: todo.title),
     );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localRepo = ref.read(localRepoProvider);
+    final todoRepo = localRepo.todoRepo;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AlertDialog(
@@ -75,19 +75,14 @@ class EditTaskDialog extends ConsumerWidget {
               String textValue = textEditingController.text;
               switch (addEditMode) {
                 case AddEditMode.add:
-                  final localRepo = ref.read(localRepoProvider);
-                  final todoRepo = localRepo.todoRepo;
-
-                  // インサート
-                  TodosCompanion newTodo = const TodosCompanion(
-                    title: Value('New Todo Title2'),
-                    isCompleted: Value(false),
+                  TodosCompanion newTodo = TodosCompanion(
+                    title: Value(textValue),
+                    isCompleted: const Value(false),
                   );
-
                   todoRepo.insertTodo(newTodo);
-
                   break;
                 case AddEditMode.edit:
+                  todoRepo.updateTodo(todo!.copyWith(title: textValue));
                   break;
                 default:
                   throw Exception('Invalid addEditMode: $addEditMode');

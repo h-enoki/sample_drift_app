@@ -22,7 +22,7 @@ class TodoListItem extends ConsumerWidget {
           ? () => showEditTaskDialog(
                 context,
                 index,
-                todo.title,
+                todo,
               )
           : () {
               todoRepo

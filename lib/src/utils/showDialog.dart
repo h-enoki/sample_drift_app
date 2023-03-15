@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sample_drift_app/src/components/edit_task_dialog.dart';
+import 'package:sample_drift_app/src/services/local/app_database.dart';
 
 Future<String?> showAddTaskDialog(BuildContext context) async {
   return await showDialog<String>(
@@ -14,13 +15,13 @@ Future<String?> showAddTaskDialog(BuildContext context) async {
 Future<String?> showEditTaskDialog(
   BuildContext context,
   int index,
-  String title,
+  Todo todo,
 ) async {
   return await showDialog<String>(
     context: context,
     barrierDismissible: false,
     builder: (_) {
-      return EditTaskDialog.editTask(index, title);
+      return EditTaskDialog.editTask(index, todo);
     },
   );
 }
