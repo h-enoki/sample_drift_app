@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sample_drift_app/main.dart';
-import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
+import 'package:sample_drift_app/src/services/local/app_database.dart';
 
 enum AddEditMode {
   add,

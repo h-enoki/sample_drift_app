@@ -1,5 +1,5 @@
-import 'package:sample_drift_app/src/data_sources/local/daos/todo_dao.dart';
-import 'package:sample_drift_app/src/data_sources/local/database.dart';
+import 'package:sample_drift_app/src/services/local/daos/todo_dao.dart';
+import 'package:sample_drift_app/src/services/local/database.dart';
 
 class LocalTodoRepository {
   final TodosDao todosDao;

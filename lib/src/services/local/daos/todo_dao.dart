@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:sample_drift_app/src/data_sources/local/database.dart';
+import 'package:sample_drift_app/src/services/local/database.dart';
 
 part 'todo_dao.g.dart';
 
