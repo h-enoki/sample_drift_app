@@ -29,14 +29,6 @@ final taskNotifierProvider =
 class TaskNotifier extends StateNotifier<List<Task>> {
   TaskNotifier(List<Task> state) : super(state);
 
-  void addTask(Task task) {
-    state = [...state, task];
-  }
-
-  void addFirstTask(Task task) {
-    state = [task, ...state];
-  }
-
   void updateTask(int index, String title) {
     state = [
       ...state.sublist(0, index),

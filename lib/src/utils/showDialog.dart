@@ -11,16 +11,6 @@ Future<String?> showAddTaskDialog(BuildContext context) async {
   );
 }
 
-Future<String?> showAddFirstTaskDialog(BuildContext context) async {
-  return await showDialog<String>(
-    context: context,
-    barrierDismissible: false,
-    builder: (_) {
-      return EditTaskDialog.addFirstTask();
-    },
-  );
-}
-
 Future<String?> showEditTaskDialog(
   BuildContext context,
   int index,

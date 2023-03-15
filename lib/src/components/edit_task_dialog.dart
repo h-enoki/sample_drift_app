@@ -10,7 +10,6 @@ import 'package:sample_drift_app/src/views/todo_list_page/todo_list_page.dart';
 
 enum AddEditMode {
   add,
-  addFirst,
   edit,
 }
 
@@ -35,13 +34,6 @@ class EditTaskDialog extends ConsumerWidget {
     );
   }
 
-  factory EditTaskDialog.addFirstTask() {
-    return EditTaskDialog(
-      addEditMode: AddEditMode.addFirst,
-      textEditingController: TextEditingController(),
-    );
-  }
-
   factory EditTaskDialog.editTask(int index, String title) {
     return EditTaskDialog(
       addEditMode: AddEditMode.edit,
@@ -59,8 +51,6 @@ class EditTaskDialog extends ConsumerWidget {
         title: (() {
           switch (addEditMode) {
             case AddEditMode.add:
-              return const Text("タスクを追加");
-            case AddEditMode.addFirst:
               return const Text("タスクを追加");
             case AddEditMode.edit:
               return const Text("タスクを編集");
@@ -88,10 +78,6 @@ class EditTaskDialog extends ConsumerWidget {
               String textValue = textEditingController.text;
               switch (addEditMode) {
                 case AddEditMode.add:
-                  ref
-                      .read(taskNotifierProvider.notifier)
-                      .addTask(Task(textValue, false));
-
                   final localRepo = ref.read(localRepoProvider);
                   final todoRepo = localRepo.todoRepo;
 
@@ -104,15 +90,7 @@ class EditTaskDialog extends ConsumerWidget {
                   todoRepo.insertTodo(newTodo);
 
                   break;
-                case AddEditMode.addFirst:
-                  ref
-                      .read(taskNotifierProvider.notifier)
-                      .addFirstTask(Task(textValue, false));
-                  break;
                 case AddEditMode.edit:
-                  ref
-                      .read(taskNotifierProvider.notifier)
-                      .updateTask(index!, textValue);
                   break;
                 default:
                   throw Exception('Invalid addEditMode: $addEditMode');

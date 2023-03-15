@@ -16,9 +16,6 @@ class AddTaskListTile extends ConsumerWidget {
           case AddEditMode.add:
             showAddTaskDialog(context);
             break;
-          case AddEditMode.addFirst:
-            showAddFirstTaskDialog(context);
-            break;
           case AddEditMode.edit:
             break;
           default:
