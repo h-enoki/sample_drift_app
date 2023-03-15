@@ -11,3 +11,6 @@ DAOは、[lib/src/data_sources/local/daos](lib/src/services/local/daos)内にあ
 画面側でDBを操作したい場合は、リポジトリを通して使う。
 リポジトリは[lib/src/repositories/local](lib/src/repositories/local)の下にある。
 
+## メモ
+コードの生成
+fvm flutter packages pub run build_runner build --delete-conflicting-outputs
