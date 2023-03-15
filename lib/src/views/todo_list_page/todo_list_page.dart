@@ -79,12 +79,7 @@ class ToDoListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditing = ref.watch(isEditingProvider);
-    final task = ref.watch(taskNotifierProvider);
-
     final todoList = ref.watch(todoListProvider);
-
-    debugPrint(todoList.value.toString());
-    debugPrint(todoList.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -104,26 +99,19 @@ class ToDoListPage extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         // データ受け取り時
         data: (data) {
-          return ReorderableListView.builder(
-            itemCount: data.length,
-            header: isEditing
-                ? const AddTaskListTile(addEditMode: AddEditMode.addFirst)
-                : null,
-            footer: isEditing
-                ? const AddTaskListTile(addEditMode: AddEditMode.add)
-                : null,
+          int itemCount = data.length;
+          return ListView.builder(
+            itemCount: isEditing ? itemCount + 1 : itemCount,
             itemBuilder: (context, index) {
+              // フッター
+              if (isEditing && index == itemCount) {
+                return const AddTaskListTile(addEditMode: AddEditMode.add);
+              }
               return TodoListItem(
                 key: Key(index.toString()),
                 index: index,
                 todo: data[index],
               );
-            },
-            // ドラッグ&ドロップ時のメソッド
-            onReorder: (oldIndex, newIndex) {
-              ref
-                  .read(taskNotifierProvider.notifier)
-                  .reorderTask(oldIndex, newIndex);
             },
           );
         },
