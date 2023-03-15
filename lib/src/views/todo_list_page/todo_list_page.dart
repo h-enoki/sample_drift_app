@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sample_drift_app/main.dart';
 import 'package:sample_drift_app/src/components/edit_task_dialog.dart';
+import 'package:sample_drift_app/src/routes/app_routes.dart';
 import 'package:sample_drift_app/src/services/local/app_database.dart';
 import 'package:sample_drift_app/src/views/todo_list_page/parts/todo_list_item.dart';
 
@@ -29,10 +30,17 @@ class ToDoListPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text("ToDoリスト"),
         actions: [
-          IconButton(
-            icon: Icon(isEditing ? Icons.check : Icons.create_rounded),
-            onPressed: () =>
-                ref.read(isEditingProvider.notifier).state = !isEditing,
+          InkWell(
+            onLongPress: () {
+              final AppDatabase db = ref.read(databaseProvider);
+              Navigator.pushNamed(context, AppRoutes.driftDbViewer,
+                  arguments: db);
+            },
+            child: IconButton(
+              icon: Icon(isEditing ? Icons.check : Icons.create_rounded),
+              onPressed: () =>
+                  ref.read(isEditingProvider.notifier).state = !isEditing,
+            ),
           ),
         ],
       ),
