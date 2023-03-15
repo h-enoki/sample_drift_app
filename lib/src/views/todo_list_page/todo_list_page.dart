@@ -48,15 +48,6 @@ class TaskNotifier extends StateNotifier<List<Task>> {
       ...state.sublist(index + 1),
     ];
   }
-
-  void reorderTask(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
-    final newState = List<Task>.from(state);
-    newState.insert(newIndex, newState.removeAt(oldIndex));
-    state = newState;
-  }
 }
 
 final todoListProvider = StreamProvider<List<Todo>>((ref) {
