@@ -1,6 +1,6 @@
 import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
 
-import 'local_todo_repository.dart';
+import 'local_repository.dart';
 
 class LocalRepositoryProvider {
   final AppDatabase appDatabase;
