@@ -41,8 +41,11 @@ class TodoListItem extends ConsumerWidget {
           trailing: isEditing
               ? IconButton(
                   icon: const Icon(Icons.close, color: Colors.red),
-                  onPressed: () =>
-                      ref.read(taskNotifierProvider.notifier).removeTask(index),
+                  onPressed: () {
+                    final localRepo = ref.read(localRepoProvider);
+                    final todoRepo = localRepo.todoRepo;
+                    todoRepo.deleteTodoById(todo.id);
+                  },
                 )
               : todo.isCompleted
                   ? Icon(Icons.check, color: Theme.of(context).primaryColor)
