@@ -36,10 +36,6 @@ class TaskNotifier extends StateNotifier<List<Task>> {
       ...state.sublist(index + 1),
     ];
   }
-
-  void removeTask(int index) {
-    state = List.from(state)..removeAt(index);
-  }
 }
 
 final todoListProvider = StreamProvider<List<Todo>>((ref) {
