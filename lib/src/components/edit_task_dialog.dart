@@ -4,9 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sample_drift_app/main.dart';
 import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
-import 'package:sample_drift_app/src/models/task.dart';
-
-import 'package:sample_drift_app/src/views/todo_list_page/todo_list_page.dart';
 
 enum AddEditMode {
   add,

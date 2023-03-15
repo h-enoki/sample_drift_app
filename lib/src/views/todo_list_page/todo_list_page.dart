@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sample_drift_app/main.dart';
 import 'package:sample_drift_app/src/components/edit_task_dialog.dart';
 import 'package:sample_drift_app/src/data_sources/local/app_database.dart';
-import 'package:sample_drift_app/src/models/task.dart';
 import 'package:sample_drift_app/src/views/todo_list_page/parts/todo_list_item.dart';
 
 import 'parts/add_task_list_tile.dart';
