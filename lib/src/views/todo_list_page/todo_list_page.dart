@@ -12,32 +12,6 @@ final isEditingProvider = StateProvider<bool>((ref) {
   return false;
 });
 
-final taskNotifierProvider =
-    StateNotifierProvider<TaskNotifier, List<Task>>((ref) {
-  return TaskNotifier(
-    [
-      const Task("task1", false),
-      const Task("task2", false),
-      const Task("task3", false),
-      const Task("task4", false),
-      const Task("task5", true),
-      const Task("task6", true),
-    ],
-  );
-});
-
-class TaskNotifier extends StateNotifier<List<Task>> {
-  TaskNotifier(List<Task> state) : super(state);
-
-  void updateTask(int index, String title) {
-    state = [
-      ...state.sublist(0, index),
-      state[index].copyWith(title: title),
-      ...state.sublist(index + 1),
-    ];
-  }
-}
-
 final todoListProvider = StreamProvider<List<Todo>>((ref) {
   final localRepo = ref.watch(localRepoProvider);
   final todoRepo = localRepo.todoRepo;
