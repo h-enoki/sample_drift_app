@@ -40,14 +40,6 @@ class TaskNotifier extends StateNotifier<List<Task>> {
   void removeTask(int index) {
     state = List.from(state)..removeAt(index);
   }
-
-  void updateIsCompleted(int index) {
-    state = [
-      ...state.sublist(0, index),
-      state[index].copyWith(isCompleted: !state[index].isCompleted),
-      ...state.sublist(index + 1),
-    ];
-  }
 }
 
 final todoListProvider = StreamProvider<List<Todo>>((ref) {
