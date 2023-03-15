@@ -12,7 +12,7 @@ final isEditingProvider = StateProvider<bool>((ref) {
 });
 
 final todoListProvider = StreamProvider<List<Todo>>((ref) {
-  final localRepo = ref.watch(localRepoProvider);
+  final localRepo = ref.read(localRepoProvider);
   final todoRepo = localRepo.todoRepo;
   return todoRepo.watchAllTodos();
 });

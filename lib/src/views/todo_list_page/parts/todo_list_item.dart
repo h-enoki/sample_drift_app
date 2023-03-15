@@ -13,6 +13,9 @@ class TodoListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localRepo = ref.read(localRepoProvider);
+    final todoRepo = localRepo.todoRepo;
+
     final isEditing = ref.watch(isEditingProvider);
     return InkWell(
       onTap: isEditing
@@ -22,8 +25,6 @@ class TodoListItem extends ConsumerWidget {
                 todo.title,
               )
           : () {
-              final localRepo = ref.read(localRepoProvider);
-              final todoRepo = localRepo.todoRepo;
               todoRepo
                   .updateTodo(todo.copyWith(isCompleted: !todo.isCompleted));
             },
@@ -42,8 +43,6 @@ class TodoListItem extends ConsumerWidget {
               ? IconButton(
                   icon: const Icon(Icons.close, color: Colors.red),
                   onPressed: () {
-                    final localRepo = ref.read(localRepoProvider);
-                    final todoRepo = localRepo.todoRepo;
                     todoRepo.deleteTodoById(todo.id);
                   },
                 )
