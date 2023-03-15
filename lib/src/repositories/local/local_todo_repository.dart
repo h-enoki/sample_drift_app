@@ -7,6 +7,10 @@ class LocalTodoRepository {
   LocalTodoRepository(AppDatabase appDatabase)
       : todosDao = appDatabase.todosDao;
 
+  Future<List<Todo>> getAllTodos() {
+    return todosDao.getAllTodos();
+  }
+
   Stream<List<Todo>> watchAllTodos() {
     return todosDao.watchAllTodos();
   }
